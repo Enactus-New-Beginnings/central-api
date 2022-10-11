@@ -3,18 +3,6 @@ const admin = require("firebase-admin");
 const fetch = require("node-fetch");
 const db=admin.database();
 
-router.get("/all", async(req,res)=>{
-  const resources = ["clothing", "food", "housing"]
-  const promises = [];
-  resources.forEach((resource)=>{
-    promises.push(db.ref().child("resources").child(resource).get().then((snapshot) => {
-      return snapshot.val();
-    }).catch(() => {
-        return
-    }))
-  });
-});
-
 router.get("/:resourceName", async (req, res) => {
     db.ref().child("resources").child(req.params.resourceName).get().then((snapshot) => {
         if (snapshot.exists()) {
